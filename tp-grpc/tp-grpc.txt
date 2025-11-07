@@ -1,0 +1,93 @@
+╔═══════════════════════════════════════════════════════════════╗
+║              ARCHITECTURE EN COUCHES - gRPC                   ║
+╚═══════════════════════════════════════════════════════════════╝
+
+
+                        Client gRPC
+                             │
+                             │ gRPC Call
+                             ↓
+┌────────────────────────────────────────────────────────────────┐
+│                    COUCHE PRÉSENTATION                         │
+│  ┌──────────────────────────────────────────────────────┐     │
+│  │         UserGrpcService.java                         │     │
+│  │  - createUser()                                      │     │
+│  │  - getUser()                                         │     │
+│  │  - getAllUsers()                                     │     │
+│  │  - deleteUser()                                      │     │
+│  └──────────────────────────────────────────────────────┘     │
+└────────────────────────┬───────────────────────────────────────┘
+                         │ @Autowired
+                         ↓
+┌────────────────────────────────────────────────────────────────┐
+│                    COUCHE SERVICE                              │
+│  ┌──────────────────────────────────────────────────────┐     │
+│  │         UserService (interface)                      │     │
+│  └──────────────────────────────────────────────────────┘     │
+│                         │                                      │
+│                         │ implements                           │
+│                         ↓                                      │
+│  ┌──────────────────────────────────────────────────────┐     │
+│  │         UserServiceImpl.java                         │     │
+│  │  - createUser()                                      │     │
+│  │  - getUserById()                                     │     │
+│  │  - getAllUsers()                                     │     │
+│  │  - deleteUser()                                      │     │
+│  └──────────────────────────────────────────────────────┘     │
+└────────────────────────┬───────────────────────────────────────┘
+                         │ @Autowired
+                         ↓
+┌────────────────────────────────────────────────────────────────┐
+│                    COUCHE REPOSITORY                           │
+│  ┌──────────────────────────────────────────────────────┐     │
+│  │    UserRepository extends JpaRepository              │     │
+│  │  - save()                                            │     │
+│  │  - findById()                                        │     │
+│  │  - findAll()                                         │     │
+│  │  - deleteById()                                      │     │
+│  │  - findByEmail()                                     │     │
+│  └──────────────────────────────────────────────────────┘     │
+└────────────────────────┬───────────────────────────────────────┘
+                         │ JPA
+                         ↓
+┌────────────────────────────────────────────────────────────────┐
+│                    COUCHE DONNÉES                              │
+│  ┌──────────────────────────────────────────────────────┐     │
+│  │         User.java (Entity)                           │     │
+│  │  @Entity                                             │     │
+│  │  - Long id                                           │     │
+│  │  - String name                                       │     │
+│  │  - String email                                      │     │
+│  └──────────────────────────────────────────────────────┘     │
+└────────────────────────┬───────────────────────────────────────┘
+                         │
+                         ↓
+                  ┌─────────────┐
+                  │  H2 Database│
+                  └─────────────┘
+
+
+═══════════════════════════════════════════════════════════════
+
+FLUX DE DONNÉES:
+
+1. Client gRPC envoie une requête
+   ↓
+2. UserGrpcService reçoit et valide
+   ↓
+3. Appel UserService (logique métier)
+   ↓
+4. UserServiceImpl exécute la logique
+   ↓
+5. UserRepository accède à la base
+   ↓
+6. Entity User représente les données
+   ↓
+7. H2 stocke/récupère les données
+   ↓
+8. Réponse remonte les couches
+   ↓
+9. Client gRPC reçoit la réponse
+
+
+Pour tester le bon fonctionnent de votre projet : Créer un client pour appeler les methodes et utiliser grpcurl.
