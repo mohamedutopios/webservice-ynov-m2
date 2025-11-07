@@ -1,0 +1,80 @@
+                           [ Client gRPC ]
+                                |
+                                v
+                        (protobuf / stubs)
+                                |
+                                v
+                    +------------------------+
+                    |   LAYER : TRANSPORT    |
+                    |  (gRPC Endpoints)      |
+                    +------------------------+
+                    | AccountGrpcService     |
+                    |  - create()            |
+                    |  - get()               |
+                    |  - listByCustomer()    |
+                    |------------------------|
+                    | CustomerGrpcService    |
+                    |  - create()            |
+                    |  - get()               |
+                    |  - list()              |
+                    |------------------------|
+                    | OperationGrpcService   |
+                    |  - create()            |
+                    |  - streamByAccount()   |
+                    +------------------------+
+                                |
+                                v
+                    +------------------------+
+                    |    LAYER : SERVICE     |
+                    +------------------------+
+                    | AccountService         |
+                    | CustomerService        |
+                    | OperationService       |
+                    +------------------------+
+                                |
+                                v
+                    +------------------------+
+                    |    LAYER : MAPPER      |
+                    +------------------------+
+                    | ProtoMapper            |
+                    | (Entity <-> Proto DTO) |
+                    +------------------------+
+                                |
+                                v
+                    +------------------------+
+                    |  LAYER : REPOSITORY    |
+                    +------------------------+
+                    | AccountRepository      |
+                    | CustomerRepository     |
+                    | OperationRepository    |
+                    +------------------------+
+                                |
+                                v
+                    +------------------------+
+                    |   LAYER : ENTITY/JPA   |
+                    +------------------------+
+                    | Customer               |
+                    |  - id                  |
+                    |  - firstName           |
+                    |  - lastName            |
+                    |  - email (unique)      |
+                    |------------------------|
+                    | Account                |
+                    |  - id                  |
+                    |  - iban (unique)       |
+                    |  - balance             |
+                    |  - customer (ManyToOne)|
+                    |------------------------|
+                    | Operation              |
+                    |  - id                  |
+                    |  - account (ManyToOne) |
+                    |  - type (DEPOSIT/      |
+                    |          WITHDRAW/     |
+                    |          TRANSFER)     |
+                    |  - amount              |
+                    |  - description         |
+                    |  - createdAt (Instant) |
+                    +------------------------+
+                                |
+                                v
+                       [ H2 DATABASE (SQL) ]
