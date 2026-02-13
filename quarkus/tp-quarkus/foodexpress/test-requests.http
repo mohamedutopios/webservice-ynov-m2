@@ -1,0 +1,298 @@
+### ============================
+### CUSTOMER SERVICE (:8081)
+### ============================
+
+### Créer un client
+POST http://localhost:8081/api/customers
+Content-Type: application/json
+
+{
+  "firstName": "Mohamed",
+  "lastName": "Ali",
+  "email": "mohamed@test.com",
+  "phone": "+33612345678",
+  "address": "10 rue de la Paix",
+  "city": "Paris",
+  "zipCode": "75001"
+}
+
+### Créer un 2e client
+POST http://localhost:8081/api/customers
+Content-Type: application/json
+
+{
+  "firstName": "Tasnime",
+  "lastName": "Martin",
+  "email": "sophie@test.com",
+  "phone": "+33698765432",
+  "address": "25 boulevard Haussmann",
+  "city": "Paris",
+  "zipCode": "75009"
+}
+
+### Lister les clients
+GET http://localhost:8081/api/customers?page=0&size=10
+
+### Récupérer un client
+GET http://localhost:8081/api/customers/1
+
+### Vérifier existence
+GET http://localhost:8081/api/customers/1/exists
+
+### Rechercher par ville
+GET http://localhost:8081/api/customers/search?city=Paris
+
+### Test validation - email invalide
+POST http://localhost:8081/api/customers
+Content-Type: application/json
+
+{
+  "firstName": "X",
+  "lastName": "",
+  "email": "invalid-email",
+  "phone": "abc",
+  "address": "test",
+  "city": "Paris",
+  "zipCode": "123"
+}
+
+### ============================
+### RESTAURANT SERVICE (:8082)
+### ============================
+
+### Créer un restaurant
+POST http://localhost:8082/api/restaurants
+Content-Type: application/json
+
+{
+  "name": "Le Petit Bistrot",
+  "cuisine": "Française",
+  "address": "5 avenue des Champs-Élysées",
+  "city": "Paris",
+  "phone": "+33143556677",
+  "openingTime": "09:00",
+  "closingTime": "23:00"
+}
+
+### Créer un 2e restaurant
+POST http://localhost:8082/api/restaurants
+Content-Type: application/json
+
+{
+  "name": "Tokyo Ramen",
+  "cuisine": "Japonaise",
+  "address": "12 rue Sainte-Anne",
+  "city": "Paris",
+  "phone": "+33142334455",
+  "openingTime": "11:30",
+  "closingTime": "22:00"
+}
+
+### Ajouter des plats au restaurant 1
+POST http://localhost:8082/api/restaurants/1/dishes
+Content-Type: application/json
+
+{
+  "name": "Steak Frites",
+  "description": "Steak grillé avec frites maison et salade",
+  "price": 18.50,
+  "category": "MAIN",
+  "allergens": "gluten"
+}
+
+###
+POST http://localhost:8082/api/restaurants/1/dishes
+Content-Type: application/json
+
+{
+  "name": "Soupe à l'oignon",
+  "description": "Soupe gratinée traditionnelle",
+  "price": 9.00,
+  "category": "STARTER"
+}
+
+###
+POST http://localhost:8082/api/restaurants/1/dishes
+Content-Type: application/json
+
+{
+  "name": "Crème Brûlée",
+  "description": "Crème vanille avec caramel croustillant",
+  "price": 8.00,
+  "category": "DESSERT",
+  "allergens": "lactose, oeufs"
+}
+
+### Ajouter des plats au restaurant 2
+POST http://localhost:8082/api/restaurants/2/dishes
+Content-Type: application/json
+
+{
+  "name": "Ramen Tonkotsu",
+  "description": "Bouillon porc, chashu, oeuf mollet, nori",
+  "price": 14.00,
+  "category": "MAIN"
+}
+
+### Lister les restaurants
+GET http://localhost:8082/api/restaurants
+
+### Récupérer un restaurant avec son menu
+GET http://localhost:8082/api/restaurants/1
+
+### Recherche par cuisine
+GET http://localhost:8082/api/restaurants/search?cuisine=Française
+
+### Vérifier existence d'un plat
+GET http://localhost:8082/api/restaurants/1/dishes/1/exists
+
+### ============================
+### DELIVERY SERVICE (:8084)
+### ============================
+
+### Créer des livreurs
+POST http://localhost:8084/api/drivers
+Content-Type: application/json
+
+{
+  "firstName": "Karim",
+  "lastName": "Benzema",
+  "phone": "+33655443322",
+  "vehicleType": "SCOOTER",
+  "currentZone": "Paris-Centre"
+}
+
+###
+POST http://localhost:8084/api/drivers
+Content-Type: application/json
+
+{
+  "firstName": "Léa",
+  "lastName": "Dupont",
+  "phone": "+33677889900",
+  "vehicleType": "BIKE",
+  "currentZone": "Paris-Nord"
+}
+
+###
+POST http://localhost:8084/api/drivers
+Content-Type: application/json
+
+{
+  "firstName": "Omar",
+  "lastName": "Sy",
+  "phone": "+33611223344",
+  "vehicleType": "CAR",
+  "currentZone": "Paris-Centre"
+}
+
+### Livreurs disponibles
+GET http://localhost:8084/api/drivers/available
+
+### ============================
+### ORDER SERVICE (:8083)
+### ============================
+
+### Passer une commande (flux complet)
+POST http://localhost:8083/api/orders
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "restaurantId": 1,
+  "deliveryAddress": "10 rue de la Paix, 75001 Paris",
+  "items": [
+    { "dishId": 1, "quantity": 2 },
+    { "dishId": 3, "quantity": 1 }
+  ]
+}
+
+### Récupérer la commande
+GET http://localhost:8083/api/orders/1
+
+### Vue agrégée complète
+GET http://localhost:8083/api/orders/1/full
+
+### Commandes d'un client
+GET http://localhost:8083/api/orders/customer/1
+
+### Mettre à jour le statut
+PUT http://localhost:8083/api/orders/1/status
+Content-Type: application/json
+
+{
+  "status": "CONFIRMED"
+}
+
+### ============================
+### TESTS D'ERREUR
+### ============================
+
+### Commande avec client inexistant → 422
+POST http://localhost:8083/api/orders
+Content-Type: application/json
+
+{
+  "customerId": 999,
+  "restaurantId": 1,
+  "deliveryAddress": "Somewhere",
+  "items": [{ "dishId": 1, "quantity": 1 }]
+}
+
+### Commande avec montant insuffisant → 422
+POST http://localhost:8083/api/orders
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "restaurantId": 1,
+  "deliveryAddress": "Somewhere",
+  "items": [{ "dishId": 3, "quantity": 1 }]
+}
+
+### Transition de statut invalide → 422
+PUT http://localhost:8083/api/orders/1/status
+Content-Type: application/json
+
+{
+  "status": "DELIVERED"
+}
+
+### ============================
+### DELIVERY STATUS FLOW
+### ============================
+
+### Récupérer la livraison
+GET http://localhost:8084/api/deliveries/1
+
+### Progression: ASSIGNED → PICKED_UP
+PUT http://localhost:8084/api/deliveries/1/status
+Content-Type: application/json
+
+{
+  "status": "PICKED_UP"
+}
+
+### Progression: PICKED_UP → IN_TRANSIT
+PUT http://localhost:8084/api/deliveries/1/status
+Content-Type: application/json
+
+{
+  "status": "IN_TRANSIT"
+}
+
+### Progression: IN_TRANSIT → DELIVERED
+PUT http://localhost:8084/api/deliveries/1/status
+Content-Type: application/json
+
+{
+  "status": "DELIVERED"
+}
+
+### Test transition invalide: PENDING → DELIVERED
+PUT http://localhost:8084/api/deliveries/1/status
+Content-Type: application/json
+
+{
+  "status": "DELIVERED"
+}

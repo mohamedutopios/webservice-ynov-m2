@@ -1,0 +1,36 @@
+## ============================================================
+## VERSION 8 — Dockerfile Native (GraalVM multi-stage)
+## ============================================================
+## Image résultante : ~50MB, démarre en ~0.02s !!
+##
+## Build (⚠️ prend 3-5 min, nécessite 4GB+ RAM) :
+##   docker build -f src/main/docker/Dockerfile.native -t task-manager:native .
+## Run :
+##   docker run -p 8080:8080 task-manager:native
+## ============================================================
+
+## Étape 1 : Build natif avec GraalVM
+FROM quay.io/quarkus/ubi-quarkus-mandrel-builder-image:jdk-21 AS build
+USER root
+RUN microdnf install -y findutils
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+
+# Compilation native (AOT — Ahead Of Time)
+# Tout est résolu au build : CDI, JPA, REST, validation, etc.
+RUN mvn package -Pnative -DskipTests \
+    -Dquarkus.native.additional-build-args="-march=compatibility"
+
+## Étape 2 : Image minimale (pas de JVM !)
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.10
+WORKDIR /work/
+RUN chown 1001 /work && chmod "g+rwX" /work && chown 1001:root /work
+
+# Copier l'exécutable natif (~50MB)
+COPY --from=build --chown=1001:root /app/target/*-runner /work/application
+
+EXPOSE 8080
+USER 1001
+
+ENTRYPOINT ["./application", "-Dquarkus.http.host=0.0.0.0"]

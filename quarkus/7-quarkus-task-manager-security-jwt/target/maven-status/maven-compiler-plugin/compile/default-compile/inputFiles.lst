@@ -1,0 +1,12 @@
+/Users/mohamedaijjou/Documents/quarkus/2-quarkus-progressif/v-security-jwt/src/main/java/com/example/taskmanager/config/AppConfig.java
+/Users/mohamedaijjou/Documents/quarkus/2-quarkus-progressif/v-security-jwt/src/main/java/com/example/taskmanager/config/AppLifecycle.java
+/Users/mohamedaijjou/Documents/quarkus/2-quarkus-progressif/v-security-jwt/src/main/java/com/example/taskmanager/dto/TaskDTO.java
+/Users/mohamedaijjou/Documents/quarkus/2-quarkus-progressif/v-security-jwt/src/main/java/com/example/taskmanager/entity/Priority.java
+/Users/mohamedaijjou/Documents/quarkus/2-quarkus-progressif/v-security-jwt/src/main/java/com/example/taskmanager/entity/Status.java
+/Users/mohamedaijjou/Documents/quarkus/2-quarkus-progressif/v-security-jwt/src/main/java/com/example/taskmanager/entity/Task.java
+/Users/mohamedaijjou/Documents/quarkus/2-quarkus-progressif/v-security-jwt/src/main/java/com/example/taskmanager/exception/GlobalExceptionMapper.java
+/Users/mohamedaijjou/Documents/quarkus/2-quarkus-progressif/v-security-jwt/src/main/java/com/example/taskmanager/mapper/TaskMapper.java
+/Users/mohamedaijjou/Documents/quarkus/2-quarkus-progressif/v-security-jwt/src/main/java/com/example/taskmanager/repository/TaskRepository.java
+/Users/mohamedaijjou/Documents/quarkus/2-quarkus-progressif/v-security-jwt/src/main/java/com/example/taskmanager/resource/ConfigResource.java
+/Users/mohamedaijjou/Documents/quarkus/2-quarkus-progressif/v-security-jwt/src/main/java/com/example/taskmanager/resource/TaskResource.java
+/Users/mohamedaijjou/Documents/quarkus/2-quarkus-progressif/v-security-jwt/src/main/java/com/example/taskmanager/service/TaskService.java

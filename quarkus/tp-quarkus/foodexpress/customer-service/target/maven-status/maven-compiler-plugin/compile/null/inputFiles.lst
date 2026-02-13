@@ -1,0 +1,9 @@
+/Users/mohamedaijjou/Downloads/foodexpress/customer-service/src/main/java/com/foodexpress/customer/dto/CustomerRequest.java
+/Users/mohamedaijjou/Downloads/foodexpress/customer-service/src/main/java/com/foodexpress/customer/dto/PaginatedResponse.java
+/Users/mohamedaijjou/Downloads/foodexpress/customer-service/src/main/java/com/foodexpress/customer/entity/Customer.java
+/Users/mohamedaijjou/Downloads/foodexpress/customer-service/src/main/java/com/foodexpress/customer/exception/DuplicateResourceException.java
+/Users/mohamedaijjou/Downloads/foodexpress/customer-service/src/main/java/com/foodexpress/customer/exception/ErrorResponse.java
+/Users/mohamedaijjou/Downloads/foodexpress/customer-service/src/main/java/com/foodexpress/customer/exception/GlobalExceptionMapper.java
+/Users/mohamedaijjou/Downloads/foodexpress/customer-service/src/main/java/com/foodexpress/customer/exception/ResourceNotFoundException.java
+/Users/mohamedaijjou/Downloads/foodexpress/customer-service/src/main/java/com/foodexpress/customer/resource/CustomerResource.java
+/Users/mohamedaijjou/Downloads/foodexpress/customer-service/src/main/java/com/foodexpress/customer/service/CustomerService.java

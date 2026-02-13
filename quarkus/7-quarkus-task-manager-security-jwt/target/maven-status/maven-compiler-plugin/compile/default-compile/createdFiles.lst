@@ -1,0 +1,14 @@
+com/example/taskmanager/exception/GlobalExceptionMapper.class
+com/example/taskmanager/entity/Priority.class
+com/example/taskmanager/config/AppLifecycle.class
+com/example/taskmanager/entity/Status.class
+com/example/taskmanager/config/AppConfig$Pagination.class
+com/example/taskmanager/resource/TaskResource.class
+com/example/taskmanager/service/TaskService.class
+com/example/taskmanager/resource/ConfigResource.class
+com/example/taskmanager/dto/TaskDTO.class
+com/example/taskmanager/repository/TaskRepository.class
+com/example/taskmanager/mapper/TaskMapper.class
+com/example/taskmanager/entity/Task.class
+com/example/taskmanager/exception/GlobalExceptionMapper$ErrorResponse.class
+com/example/taskmanager/config/AppConfig.class

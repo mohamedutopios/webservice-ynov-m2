@@ -1,0 +1,72 @@
+## ============================================================
+## VERSION 8 — Docker Compose (JVM + Native + PostgreSQL)
+## ============================================================
+## Usage :
+##   docker compose up -d          → lance tout
+##   docker compose logs -f app    → voir les logs
+##   docker compose down -v        → tout supprimer
+## ============================================================
+
+services:
+
+  ## Base de données
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: taskdb
+      POSTGRES_USER: task
+      POSTGRES_PASSWORD: task
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U task -d taskdb"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  ## Application Quarkus (mode JVM)
+  app-jvm:
+    build:
+      context: .
+      dockerfile: src/main/docker/Dockerfile.jvm
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: postgres
+      DB_NAME: taskdb
+      DB_USER: task
+      DB_PASS: task
+    depends_on:
+      postgres:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    profiles: ["jvm"]
+
+  ## Application Quarkus (mode Native)
+  app-native:
+    build:
+      context: .
+      dockerfile: src/main/docker/Dockerfile.native
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: postgres
+      DB_NAME: taskdb
+      DB_USER: task
+      DB_PASS: task
+    depends_on:
+      postgres:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+    profiles: ["native"]
+
+volumes:
+  pgdata:

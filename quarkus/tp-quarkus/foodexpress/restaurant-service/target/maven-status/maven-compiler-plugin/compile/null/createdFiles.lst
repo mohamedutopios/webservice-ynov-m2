@@ -1,0 +1,13 @@
+com/foodexpress/restaurant/dto/PaginatedResponse.class
+com/foodexpress/restaurant/exception/ResourceNotFoundException.class
+com/foodexpress/restaurant/entity/Dish.class
+com/foodexpress/restaurant/resource/RestaurantResource.class
+com/foodexpress/restaurant/dto/DishRequest.class
+com/foodexpress/restaurant/dto/RestaurantRequest.class
+com/foodexpress/restaurant/service/RestaurantService.class
+com/foodexpress/restaurant/exception/GlobalExceptionMapper.class
+com/foodexpress/restaurant/entity/Dish$DishCategory.class
+com/foodexpress/restaurant/exception/DuplicateResourceException.class
+com/foodexpress/restaurant/exception/ErrorResponse.class
+com/foodexpress/restaurant/entity/Restaurant.class
+com/foodexpress/restaurant/exception/ErrorResponse$FieldViolation.class
